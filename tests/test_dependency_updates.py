@@ -21,7 +21,11 @@ class UpdateTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        # GitHub-hosted Windows runners can expose the temporary directory
+        # through an 8.3 alias (RUNNER~1) while Path.resolve() returns the long
+        # form. Normalize once so path comparisons and mocked renames exercise
+        # the same paths on local and hosted Windows machines.
+        self.root = Path(self.temp.name).resolve()
         self.app = self.root / "app"
         self.tools = self.app / "tools"
         self.tools.mkdir(parents=True)
