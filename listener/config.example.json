@@ -1,0 +1,63 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "port": 17392,
+    "auth_token": "CHANGE_ME_TO_A_RANDOM_TOKEN",
+    "allowed_origins": [
+      "chrome-extension://*"
+    ],
+    "request_body_limit_bytes": 16384
+  },
+  "downloads": {
+    "directory": "%USERPROFILE%\\Downloads\\YouTube",
+    "archive_file": "%LOCALAPPDATA%\\YouTubeYtDlpBridge\\download-archive.txt",
+    "jobs_file": "%LOCALAPPDATA%\\YouTubeYtDlpBridge\\jobs.json",
+    "database_file": "%LOCALAPPDATA%\\YouTubeYtDlpBridge\\jobs.db",
+    "log_file": "%LOCALAPPDATA%\\YouTubeYtDlpBridge\\listener.log"
+  },
+  "scheduler": {
+    "max_total_concurrent": 3,
+    "max_ytdlp_concurrent": 2,
+    "max_douk_concurrent": 1,
+    "max_attempts": 2,
+    "retry_delay_seconds": 3
+  },
+  "yt_dlp": {
+    "executable": "%LOCALAPPDATA%\\Programs\\yt-dlp-portable\\yt-dlp.exe",
+    "ffmpeg_location": "%LOCALAPPDATA%\\Programs\\yt-dlp-portable\\ffmpeg\\ffmpeg-9.0.1-essentials_build\\bin",
+    "proxy": "",
+    "cookies_from_browser": "chrome",
+    "platforms": {
+      "youtube": {
+        "cookies_from_browser": "chrome",
+        "cookies_fallback_from_browser": "firefox",
+        "proxy": ""
+      },
+      "bilibili": {
+        "cookies_from_browser": "chrome",
+        "cookies_fallback_from_browser": "firefox",
+        "proxy": ""
+      }
+    },
+    "js_runtime": "node:C:\\Program Files\\nodejs\\node.exe",
+    "remote_components": [
+      "ejs:github"
+    ],
+    "format": "bv*[height<=1080][ext=mp4]+ba[ext=m4a]/b[height<=1080][ext=mp4]/b[height<=1080]",
+    "merge_output_format": "mp4",
+    "output_template": "%(title).180B [%(id)s].%(ext)s",
+    "concurrent_fragments": 4,
+    "restrict_filenames": false,
+    "write_info_json": true,
+    "extra_args": []
+  },
+  "douk": {
+    "root": "%LOCALAPPDATA%\\Programs\\DouK-Downloader",
+    "wrapper": "%PROJECT_ROOT%\\listener\\download_douyin.ps1",
+    "output_directory": "%USERPROFILE%\\Downloads\\Video Downloads\\Douyin",
+    "powershell_executable": "powershell.exe",
+    "refresh_cookie_from_browser": false,
+    "browser": "Firefox",
+    "expected_sha256": "DA81823ED80D1D38F49F1F7DBE441EC564AB3216E01378A940A91F44BC52D5C0"
+  }
+}

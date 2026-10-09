@@ -1,0 +1,77 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f4f6f8;
+  color: #172033;
+}
+
+body { margin: 0; }
+
+main {
+  width: min(680px, calc(100% - 40px));
+  margin: 48px auto;
+  padding: 28px;
+  border: 1px solid #d9dee7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgb(25 39 70 / 8%);
+}
+
+h1 { margin-top: 0; font-size: 1.55rem; }
+h2 { margin-top: 28px; font-size: 1rem; }
+.intro { color: #526078; line-height: 1.6; }
+
+label {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+  font-weight: 650;
+}
+
+label small {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #b9c2d0;
+  border-radius: 8px;
+  font: inherit;
+  background: #fff;
+  color: #172033;
+}
+
+.actions { display: flex; gap: 10px; margin-top: 22px; }
+
+button {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button.secondary { background: #475569; }
+button:disabled { opacity: .6; cursor: wait; }
+kbd, code, pre { font-family: ui-monospace, "Cascadia Code", monospace; }
+kbd { padding: 2px 6px; border: 1px solid #aab2c0; border-radius: 5px; background: #edf0f5; }
+pre { overflow-wrap: anywhere; white-space: pre-wrap; padding: 12px; border-radius: 8px; background: #eef2f7; }
+#status { min-height: 1.5em; font-weight: 650; }
+#status.ok { color: #15803d; }
+#status.error { color: #b91c1c; }
+
+@media (prefers-color-scheme: dark) {
+  :root { background: #111827; color: #e5e7eb; }
+  main { background: #182133; border-color: #334155; }
+  .intro { color: #b6c1d2; }
+  input { background: #111827; color: #e5e7eb; border-color: #526078; }
+  kbd, pre { background: #263248; }
+}

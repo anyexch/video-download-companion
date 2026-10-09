@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>下载任务</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>视频下载任务</h1>
+        <p id="connection">正在连接本地调度器……</p>
+      </div>
+      <button id="settings" class="icon" title="设置">⚙</button>
+    </header>
+
+    <section id="summary" class="summary" aria-label="任务汇总"></section>
+
+    <div class="actions">
+      <button id="download-current" class="primary">下载当前视频</button>
+      <button id="refresh">刷新</button>
+    </div>
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <main id="jobs">
+      <p class="empty">尚无任务</p>
+    </main>
+
+    <footer>面板每秒刷新；关闭面板不会中断下载。</footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

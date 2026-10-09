@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>三平台视频快捷捕获设置</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main>
+      <h1>三平台视频快捷捕获</h1>
+      <p class="intro">扩展只提取并提交当前 YouTube、Bilibili 或 Douyin 作品链接。YouTube/Bilibili 由 yt-dlp 在执行时读取各自配置的浏览器 Cookie；Douyin 使用 DouK 已保存的 Cookie，并可由 Companion 调用 DouK 从 Firefox 手动刷新。Cookie 不经过扩展或监听接口。</p>
+
+      <form id="settings-form">
+        <label>
+          监听器地址
+          <input id="endpoint" type="url" required spellcheck="false" placeholder="http://127.0.0.1:17392">
+        </label>
+        <label>
+          本地接口令牌
+          <input id="auth-token" type="password" required spellcheck="false" autocomplete="off">
+          <small>仅用于确认请求来自你的扩展，不是 YouTube、Bilibili、Douyin 的令牌，也不包含 Cookie。首次设置后无需重复填写。</small>
+        </label>
+        <label>
+          请求超时（毫秒）
+          <input id="request-timeout" type="number" min="1000" max="60000" step="500" required>
+        </label>
+        <div class="actions">
+          <button type="submit">保存</button>
+          <button type="button" id="test-button" class="secondary">测试连接</button>
+        </div>
+      </form>
+
+      <section>
+        <h2>快捷键</h2>
+        <p>默认是 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>Y</kbd>。可在 <code>chrome://extensions/shortcuts</code> 中修改。</p>
+      </section>
+
+      <section>
+        <h2>最近一次捕获</h2>
+        <pre id="last-capture">尚无记录</pre>
+      </section>
+
+      <section>
+        <h2>最近一次提交</h2>
+        <pre id="last-submission">尚无记录</pre>
+      </section>
+
+      <p id="status" role="status" aria-live="polite"></p>
+    </main>
+    <script src="options.js"></script>
+  </body>
+</html>

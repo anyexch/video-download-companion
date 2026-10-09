@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.build-venv/
+
+# Builds and packages
+build/
+build-*/
+dist/
+package-dist/
+companion/installer/staging/
+*.spec
+*.exe
+*.msi
+*.zip
+*.7z
+
+# Runtime state and downloaded media
+config.json
+jobs.json
+jobs.db
+*.sqlite
+*.sqlite3
+*.log
+download-archive.txt
+downloads/
+tools/
+.updates/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
