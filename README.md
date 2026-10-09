@@ -2,7 +2,7 @@
 
 Windows 本地视频下载工具：在 Chrome 中捕获当前 YouTube、Bilibili 或 Douyin 作品，将规范化链接提交给本机持久化队列，再分别交给 yt-dlp 或 DouK 下载。
 
-当前源码版本：`0.1.15`。这是准备公开维护的首个源码仓库版本；正式安装包发布前仍需完成全新 Windows 环境安装验收、第三方分发复核和代码签名决策。
+当前版本：Companion `0.1.15`、Chrome 扩展 `0.6.0`。Windows 安装包已作为公开候选版发布；它尚未进行 Authenticode 签名，也尚未完成全新 Windows 虚拟机验收，请先阅读下面的安装说明和已知限制。
 
 ## 功能
 
@@ -26,6 +26,65 @@ docs/        架构和维护说明
 ```
 
 浏览器扩展只负责捕获链接和显示任务状态。下载进程、Cookie 读取、队列和文件操作全部留在本机监听器中。完整数据流见 [架构说明](docs/architecture.md)。
+
+## 下载、安装与使用（推荐）
+
+### 1. 下载 Windows 安装包
+
+前往 [`v0.1.15` Release](https://github.com/anyexch/video-download-companion/releases/tag/v0.1.15)，下载：
+
+- `Video-Download-Companion-Setup-0.1.15.exe`：Windows 联网安装器。
+- `video-download-companion-extension-0.6.0.zip`：Chrome 扩展。
+- `SHA256SUMS.txt`：文件完整性校验值。
+
+安装器会联网下载并校验 yt-dlp、FFmpeg、Deno 和 DouK，因此首次安装需要能够访问这些项目的 GitHub Release。安装器目前没有代码签名；如果 Windows SmartScreen 显示“未知发布者”，请先确认下载地址属于本仓库并核对 SHA-256，再选择“更多信息”→“仍要运行”。
+
+可在 PowerShell 中校验安装器：
+
+```powershell
+Get-FileHash .\Video-Download-Companion-Setup-0.1.15.exe -Algorithm SHA256
+```
+
+结果应与同一 Release 中 `SHA256SUMS.txt` 的对应记录一致。
+
+### 2. 运行安装器
+
+1. 双击安装器，选择视频保存目录；默认会建立 `YouTube-Bilibili` 和 `Douyin` 两个子目录。
+2. 根据需要保留“登录 Windows 后自动启动 Companion”选项。
+3. 等待依赖下载和哈希校验完成，不要关闭安装过程中出现的 PowerShell 窗口。
+4. 首次安装会打开 DouK。请自行选择语言、阅读并接受其免责声明；需要抖音登录状态时，可按窗口提示从已登录的浏览器读取 Cookie。
+5. 安装结束后，系统托盘应出现 Video Download Companion 图标，菜单第一行应显示“调度器：在线”。
+
+程序默认安装到 `%LOCALAPPDATA%\Programs\VideoDownloadCompanion`，配置、日志和任务数据库位于 `%LOCALAPPDATA%\YouTubeYtDlpBridge`。升级或卸载不会删除已经下载的视频。
+
+### 3. 安装 Chrome 扩展
+
+1. 解压 `video-download-companion-extension-0.6.0.zip` 到一个长期保留的目录；不要直接从 ZIP 加载。
+2. 打开 `chrome://extensions/`，启用右上角“开发者模式”。
+3. 选择“加载已解压的扩展程序”，选中解压后包含 `manifest.json` 的目录。
+4. 打开扩展的“详情”→“扩展程序选项”。
+5. 在 PowerShell 中读取安装器生成的本地接口令牌：
+
+   ```powershell
+   (Get-Content "$env:LOCALAPPDATA\YouTubeYtDlpBridge\config.json" -Raw | ConvertFrom-Json).server.auth_token
+   ```
+
+6. 将令牌粘贴到扩展选项的“本地接口令牌”，保存并点击“测试连接”。令牌只用于浏览器扩展连接本机 `127.0.0.1:17392`，不要公开分享。
+
+### 4. 下载视频
+
+1. 打开支持的 YouTube、Bilibili 或 Douyin 视频／作品页面。
+2. 按 `Ctrl+Shift+Y`，或点击扩展图标后提交当前页面。
+3. 扩展弹窗会显示排队、下载进度、完成或失败状态；完成后可以直接打开文件或在资源管理器中定位。
+4. 下载目录、代理、Cookie 浏览器和依赖更新可从系统托盘图标的“打开设置”或相关菜单调整。
+
+常见问题：
+
+- 扩展提示连接失败：确认托盘中的调度器在线，并重新核对令牌。
+- YouTube／Bilibili 登录内容失败：先在设置中选择已登录的浏览器；Chrome Cookie 数据库被占用时可关闭 Chrome 后重试，或使用 Firefox 回退。
+- 抖音失败：从托盘菜单执行 DouK Cookie 刷新，并按窗口提示完成浏览器 Cookie 读取。
+- 安装失败：查看 `%LOCALAPPDATA%\YouTubeYtDlpBridge\dependency-install.log`。
+- 下载失败：从托盘菜单打开日志，或查看 `%LOCALAPPDATA%\YouTubeYtDlpBridge\listener.log`。
 
 ## 从源码运行
 
